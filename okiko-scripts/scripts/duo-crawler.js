@@ -20,14 +20,15 @@ function getAgeInfo(text) {
 function parseAgeInfo(text) {
   let ages = text.split(' ').filter(a => (!isNaN(a) && a.length > 0) || a.match(/\d+/g))
     .map(ag => ag.match(/\d+/g)[0]).filter(b => Number(b) < 18).map(e => Number(e));
-  
   let finalAge = null;
-
+  
   if (ages.length === 1) {
     finalAge = ages[0];
   } else {
-    ages = ages.splice(1);
-    finalAge = Math.min(...ages);
+    if (ages.length !== 0) {
+      ages = ages.splice(1);
+      finalAge = Math.min(...ages);
+    }
   }
   return finalAge;
 }
@@ -53,7 +54,7 @@ module.exports = function makeRequest(EAN) {
     });
   }).catch(err => {
     // if error (which implies no age can be retrieved) returns ''
-    return '';
+    return {};
   });
 }
 

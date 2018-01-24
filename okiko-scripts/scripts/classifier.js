@@ -7,13 +7,19 @@ const nlp = require('compromise');
 const BayesClassifier = new natural.BayesClassifier();
 
 // single instance 
-/*
-natural.BayesClassifier.load('bayes.json', null, function(err, classifier) {
-  const words = 'STABILO Ergonomischer Tintenroller EASYoriginal metallic neonpink mit Patrone Linkshaender';
-  console.log(classifier.classify('Tintenroller'));
-});
-*/
+module.exports = function Classifier(name) {
+  return new Promise((resolve, reject) => {
+    // only 1 model is usable. So hardcoding is fine
+    natural.BayesClassifier.load('../models/bayes-v4.json', null, function(err, classifier) {
+      if (err) reject(err);
+      resolve({ age : classifier.classify(name) });
+    });
+  }).catch(err => {
+    return {}
+  });
+}
 
+/*
 natural.BayesClassifier.load('bayes-v4.json', null, function(err, classifier) {
   readData('./training/test.csv')
   .then(data => data.toString().split('\n'))
@@ -34,5 +40,4 @@ natural.BayesClassifier.load('bayes-v4.json', null, function(err, classifier) {
   })
   .catch(err => console.log(err));
 });
-
-
+*/
