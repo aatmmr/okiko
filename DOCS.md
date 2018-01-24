@@ -32,6 +32,14 @@ of the scripts:
   5. readFile.js - to read .csv file
   6. scrapeData.js - gather data by crawling duo-shop.de
 
+We also used several libraries to help us to abstract various implementations. Some notable
+libraries include:
+
+  1. express.js - for server
+  2. natural - NLP library that contains bayes classifier
+  3. request - a library to make network calls, we use this mainly to crawl websites
+  4. htmlparser2 - a html parser to process html input
+
 In addition, the directory also contains several ML models and cleaned data for training
 and test set. The training dataset is used to train the ML model to recognise product age category and the test dataset is used to validate the ML model.
 
