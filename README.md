@@ -1,3 +1,5 @@
+![Imgur](https://i.imgur.com/VN2Nmj5.png)
+
 # Poppins: Your Very Own Web Nanny
 
 ## Problem statement
