@@ -51,17 +51,19 @@ function analyseAge(ean, name) {
 }
 
 // read the data file
-readFile('../okiko-data/data2.csv')
+readFile('../okiko-data/250.csv')
   // remove the header here...
-  .then(data => data.toString().split('\n').splice(1))
+  .then(data => data.toString().split('\n'))
   .then(data => {
     const array = [];
+    let error = 0;
+    let MLError = 0;
 
     data.map((d, i) => {
       // do analysis here...
       const values = d.split(';');
       const EAN = values[1];
-      const name = values[4];
+      const name = values[0];
       array.push(analyseAge(EAN, name))
     });
 
@@ -69,7 +71,17 @@ readFile('../okiko-data/data2.csv')
       result.map((ages, i) => {
         const values = data[i].split(';');
         const weightedAge = calculateWeightedAge(ages);
-        console.log(`${values[4]};${ages.map(age => age || -1).join(';')};${weightedAge}`);
+        const realAge = values[2];
+        console.log(`${values[0]};${ages.map(age => age || -1).join(';')};${weightedAge};${realAge}`);
+        if (Math.abs(Number(realAge) - Number(weightedAge)) > 2) {
+          error += 1;
+        }
+        if (Math.abs(Number(realAge) - Number(ages[2])) > 2) {
+          MLError += 1;
+        }
       })
-    })
+    }).then(() => {
+      console.log('error rate ', error / data.length);
+      console.log('ML error rate ', MLError / data.length);
+    });
   });

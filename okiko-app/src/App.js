@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import logo from './poppins.png';
+import logo from './logo.png';
 import './App.css';
 
 class App extends Component {
@@ -25,7 +25,7 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Poppins - Goods Prediction Service</h1>
+          <h1 className="App-title">Goods Prediction Service</h1>
         </header>
         <div className="App-intro">
           <form onSubmit={(e) => { 

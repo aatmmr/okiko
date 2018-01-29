@@ -1,15 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import logo from './poppins.png';
-
-const poppinsStyle = {
-  animation: 'App-logo-spin infinite 3s linear',
-  height: '30px', 
-  display: 'block', 
-  float: 'left'
-};
-
-const Poppins = ({height}) => <img src={logo} style={{ ...poppinsStyle, height }} alt='logo'/>
+import logo from './logo.png';
 
 class Search extends Component {
   constructor(props) {
@@ -32,13 +23,13 @@ class Search extends Component {
     return (
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         <header className="Search-header">
-          <Poppins height="30px"/>
-          <div style={{fontSize: 20, padding: 5, paddingLeft: 35, color: 'black'}}>Poppins - Goods Prediction Service</div>
+          <img src={logo} className="App-logo" style={{ height: 30 }} alt="logo" />
+          <span style={{fontSize: 15, paddingLeft: 10, paddingTop:5, flex: 1, color: 'white'}}>Goods Prediction Service</span>
         </header>
         <div style={{ flex: 1 }}>
         {
           this.state.isLoaded ? <Content {...this.state.data} />
-          : <div style={{ padding: 20 }}><Poppins height="50px"/><br/><br/><p>loading...</p></div>
+          : <div style={{ padding: 20 }}><p>loading...</p></div>
         }</div>
       </div>
     );

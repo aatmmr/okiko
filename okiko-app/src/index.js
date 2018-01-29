@@ -7,12 +7,14 @@ import {
 import './index.css';
 import App from './App';
 import Search from './Search';
+import Game from './Game';
 import registerServiceWorker from './registerServiceWorker';
 
 ReactDOM.render(
   <Router>
     <div>
       <Route exact path="/" component={App}/>
+      <Route path="/game" component={Game}/>
       <Route path="/item/:id" component={Search} />
     </div>
   </Router>, 
