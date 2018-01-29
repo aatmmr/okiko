@@ -9,16 +9,16 @@ We are in collaboration with the company Okiko, which provides a payment platfor
 ## Solution
 Our solution is a program that combines web crawling, database search and ML model to approximate the appropriate minimum age of a product. The algorithm first performs database search on the biggest online retailer and subsequently also collects age related information from other big online retailers through web crawling. In addition, we also analyse the product using our ML model. 
 
-![algo model](https://imgur.com/a/tPJTn)
+![Imgur](https://i.imgur.com/fenjGFF.png)
 
 We gather all the results and give a final age classification that can be tuned using confidence values, which represent how reliable the age information are. The final age is given by:
 
-![equation](https://imgur.com/a/kCIUX)
+![Imgur](https://i.imgur.com/ORnvIfT.png)
 
 ## Project Structure
 The project is divided into main parts: the web app and the scripts. The web app displays the data from age classification analysis. The scripts contain various routines such as collecting data from various websites and training the ML model to classify product names. This product is done entirely using Javascript and NodeJS. To run the project, NodeJS has to be installed first. The installer  (which also contains the instructions) can be found here: https://nodejs.org/en/download/. This will also include npm, which is a program to retrieve useful javascript packages (libraries) online. Since we are depending on amazon item search API, please register as amazon partner here: https://partnernet.amazon.de/. Then fill in the missing information in /okiko-app/scripts.js and /okiko-scripts/scripts/amazon.js with the credentials you have obtained upon successful registration with amazon.
 
-![equation](https://imgur.com/a/IpEZK)
+![Imgur](https://i.imgur.com/xh53CP2.png)
 
 ## Web app - (Okiko-app)
 This app is built using NodeJS backend and react frontend. Latest version of node.js is required and modern browser to view the app. To run the app, we have to do the following things:
@@ -69,20 +69,20 @@ Suppose I have an unlabeled text 'I am short silver', the classifier should labe
 To train an ML model, we need to get training data. The data that we need are the name of the product and its corresponding minimum age classification. Example scripts to gather the required data are provided in get-data.js, scrape-data.js, duo-crawler.js. Typically, we create a training dataset to ‘teach’ the model and the test data to test the accuracy of the model. An example of training and test dataset is also available in ‘/training’ directory.
 Using the training data, we use build-classifier.js to create the Bayes classifier model. First, we need to ensure that we are pointing to the correct path to the data as shown in the picture below:
 
-![1](https://imgur.com/a/I08eD)
+![Imgur](https://i.imgur.com/XluI1eL.png)
 
 Then we need to specify the name of the model, in the case below it is named ‘bayes-v4’.
 
-![2](https://imgur.com/a/d6cQ7)
+![Imgur](https://i.imgur.com/2cMEpOr.png)
 
 Finally, we may use classifier.js to predict a product’s age classification given its name. Please be sure that the path to the model is correct. In the case below, the model (bayes-v4) is stored in directory ‘./models’.
 
-![3](https://imgur.com/a/sEWn0)
+![Imgur](https://i.imgur.com/d5DXyd2.png)
 
 ### Algorithm Implementation
 The full algorithm may be viewed in analyse-dataset.js. The function analyseAge retrieves age related information from Amazon, duo-shop.de and the ML model asynchronously, given a products’ name and its corresponding EAN number and returns an array which contains the resulting ages.
 
-![4](https://imgur.com/a/uBuSx)
+![Imgur](https://i.imgur.com/kPkQA3V.png)
 
 Then, we calculate the weighted age, using the function calculateWeightedAge. Using the two functions, we can approximate many products in a list.
 
