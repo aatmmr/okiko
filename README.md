@@ -1,6 +1,6 @@
 ![Imgur](https://i.imgur.com/VN2Nmj5.png)
 
-# Poppins: Your Very Own Web Nanny
+# Poppins Project Documentation
 
 ## Problem statement
 Given a list of products, create a technical solution find their minimum-age classifications within a reasonable amount of time (30s per item) with high percentage of accuracy. The result will decide whether a product is suitable for a child of a certain age.
