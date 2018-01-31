@@ -1,4 +1,4 @@
-![Imgur](https://i.imgur.com/VN2Nmj5.png)
+![Imgur](https://i.imgur.com/8QxKYnb.png)
 
 # Poppins Project Documentation
 
