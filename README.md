@@ -30,6 +30,9 @@ This app is built using NodeJS backend and react frontend. Latest version of nod
 4.	On a separate terminal window, run ‘npm run start’ to start the front end. 
 5.	A web browser will automatically be opened, and to see it in action, try accessing ‘http://localhost:3000/item/{EAN}’ where {EAN} is a 13 digit product identification number (e.g 3417761097441). Then, you should see something like the following picture:
 
+![Imgur](https://i.imgur.com/wQKCwye.png)
+
+If there is nothing to be displayed on the screen, it is likely that you are using an old version of web browser. In that case, please upgrade it to the latest version!
 
 ## Scripts
 The scripts are located in /okiko-scripts directory. Below are the functions of some
