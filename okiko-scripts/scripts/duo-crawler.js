@@ -21,19 +21,20 @@ function parseAgeInfo(text) {
   let ages = text.split(' ').filter(a => (!isNaN(a) && a.length > 0) || a.match(/\d+/g))
     .map(ag => ag.match(/\d+/g)[0]).filter(b => Number(b) < 18).map(e => Number(e));
   let finalAge = null;
-  
+
   if (ages.length === 1) {
     finalAge = ages[0];
   } else {
     if (ages.length !== 0) {
-      ages = ages.splice(1);
+      minAge = Math.min(...ages);
+      ages = ages.filter(a => a !== minAge);
       finalAge = Math.min(...ages);
     }
   }
   return finalAge;
 }
 
-module.exports = function makeRequest(EAN) {
+function makeRequest(EAN) {
   return new Promise((resolve, reject) => {
     let age = '';
     const parser = new htmlparser.Parser({
@@ -57,6 +58,8 @@ module.exports = function makeRequest(EAN) {
     return {};
   });
 }
+
+module.exports = makeRequest;
 
 /* Example...
 readData('./data2.csv')

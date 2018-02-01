@@ -1,7 +1,7 @@
 const AmazonAPI = require('./amazon');
 const DuoCrawl = require('./duo-crawler');
 const Classifier = require('./classifier');
-const readFile = require('./readFile');
+const readData = require('./read-file');
 
 /*
 // try amazon
@@ -24,15 +24,22 @@ Classifier('Idena Eimergarnitur, 6-teilig, sortiert').then(res => {
 // weigted age = w_amazon * age_amazon + w_duo * age_duo + w_ml * age_ml / sum of all weights
 function calculateWeightedAge(ages) {
   const ageAmazon = isNaN(String(ages[0])) ? 0 : Number(ages[0]);
-  const ageDuo = isNaN(String(ages[1])) ? 0 : Number(ages[1]);
+  let ageDuo = isNaN(String(ages[1]));
+  if (isNaN(String(ages[1])) || Number(ages[1]) === Infinity 
+    || Number(ages[1]) === 0) {
+    ageDuo = 0;
+  } else {
+    ageDuo = Number(ages[1]);
+  }
   const ageML = Number(ages[2]);
 
   const wAmazon = ageAmazon === 0 ? 0 : 5;
   const wDuo = ageDuo === 0 ? 0 : 4;
   const wML = 1;
 
-  return Math.floor(((ageAmazon * wAmazon) + (ageDuo * wDuo) 
-    + (ageML * wML)) / (wAmazon + wDuo + wML)); 
+  const result = Math.floor(((ageAmazon * wAmazon) + (ageDuo * wDuo) 
+  + (ageML * wML)) / (wAmazon + wDuo + wML));  
+  return result;
 }
 
 function analyseAge(ean, name) {
@@ -51,7 +58,7 @@ function analyseAge(ean, name) {
 }
 
 // read the data file
-readFile('../okiko-data/250.csv')
+readData('../okiko-data/TEST-DATA-OKIKO.csv')
   // remove the header here...
   .then(data => data.toString().split('\n'))
   .then(data => {
@@ -62,26 +69,18 @@ readFile('../okiko-data/250.csv')
     data.map((d, i) => {
       // do analysis here...
       const values = d.split(';');
-      const EAN = values[1];
+      const EAN = values[1].replace('\r', '');
       const name = values[0];
       array.push(analyseAge(EAN, name))
     });
-
+  
     Promise.all(array).then(result => {
       result.map((ages, i) => {
         const values = data[i].split(';');
+        const name = values[0];
+        const EAN = values[1].replace('\r', '');
         const weightedAge = calculateWeightedAge(ages);
-        const realAge = values[2];
-        console.log(`${values[0]};${ages.map(age => age || -1).join(';')};${weightedAge};${realAge}`);
-        if (Math.abs(Number(realAge) - Number(weightedAge)) > 2) {
-          error += 1;
-        }
-        if (Math.abs(Number(realAge) - Number(ages[2])) > 2) {
-          MLError += 1;
-        }
+        console.log(`${EAN};${name};${weightedAge}`);
       })
-    }).then(() => {
-      console.log('error rate ', error / data.length);
-      console.log('ML error rate ', MLError / data.length);
     });
   });

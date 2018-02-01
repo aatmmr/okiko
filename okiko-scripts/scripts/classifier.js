@@ -1,5 +1,4 @@
 const fs = require('fs');
-const readData = require('./readFile');
 const natural = require('natural');
 const nlp = require('compromise');
 

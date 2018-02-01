@@ -45,7 +45,7 @@ const BayesClassifier = new natural.BayesClassifier();
 function Classifier(name) {
   return new Promise((resolve, reject) => {
     // only 1 model is usable. So hardcoding is fine
-    natural.BayesClassifier.load('bayes-v4.json', null, function(err, classifier) {
+    natural.BayesClassifier.load('./bayes-v4.json', null, function(err, classifier) {
       if (err) reject(err);
       resolve({ age : classifier.classify(name) });
     });
@@ -73,12 +73,13 @@ function parseAgeInfo(text) {
   let ages = text.split(' ').filter(a => (!isNaN(a) && a.length > 0) || a.match(/\d+/g))
     .map(ag => ag.match(/\d+/g)[0]).filter(b => Number(b) < 18).map(e => Number(e));
   let finalAge = null;
-  
+
   if (ages.length === 1) {
     finalAge = ages[0];
   } else {
     if (ages.length !== 0) {
-      ages = ages.splice(1);
+      minAge = Math.min(...ages);
+      ages = ages.filter(a => a !== minAge);
       finalAge = Math.min(...ages);
     }
   }
@@ -126,15 +127,22 @@ function AnalyseAge(ean, name) {
 
 function CalculateWeightedAge(ages) {
   const ageAmazon = isNaN(String(ages[0])) ? 0 : Number(ages[0]);
-  const ageDuo = isNaN(String(ages[1])) ? 0 : Number(ages[1]);
+  let ageDuo = isNaN(String(ages[1]));
+  if (isNaN(String(ages[1])) || Number(ages[1]) === Infinity 
+    || Number(ages[1]) === 0) {
+    ageDuo = 0;
+  } else {
+    ageDuo = Number(ages[1]);
+  }
   const ageML = Number(ages[2]);
 
   const wAmazon = ageAmazon === 0 ? 0 : 5;
   const wDuo = ageDuo === 0 ? 0 : 4;
   const wML = 1;
 
-  return Math.floor(((ageAmazon * wAmazon) + (ageDuo * wDuo) 
-    + (ageML * wML)) / (wAmazon + wDuo + wML)); 
+  const result = Math.floor(((ageAmazon * wAmazon) + (ageDuo * wDuo) 
+  + (ageML * wML)) / (wAmazon + wDuo + wML));  
+  return result;
 }
 
 module.exports = {
